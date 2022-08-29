@@ -1,45 +1,46 @@
-// Declare variables.
-let word;
+// Declare variables
 const consonants = ['b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z']; 
 const suffix = 'ay';
 const conArray = [];
 const button = document.getElementById('button');
 const displayResult = document.getElementById('result-box');
+let clicked = false;
 
+// Get user word and translate to Pig Latin
 
-// Step 1: Write a function to store user's input as a variable after button clicked
-button.addEventListener('click', getWord);
+button.addEventListener('click', function(){
+  if(!clicked){
+    clicked = true;
+    let word = document.getElementById('input').value;
+    word = word.toLowerCase();
+    console.log(`User's word is "${word}".`);
 
-function getWord(){
-  let word = document.getElementById('input').value;
-  word = word.toLocaleLowerCase();
-  console.log(`User's word is "${word}".`);
-}
-
-// Step 2: Write a function to change user's word into Pig Latin
-function pigLatin() {
-  for (let i = 0; i < word.length; i++){
-  for (let j = 0; j < consonants.length; j++){
-      if (word[i] === consonants[j]){
-        conArray.push(word[i]);
+    for (let i = 0; i < word.length; i++){
+    for (let j = 0; j < consonants.length; j++){
+        if (word[i] === consonants[j]){
+          conArray.push(word[i]);
+        }
       }
     }
-  }
-  const firstCon = conArray.shift();  
-  let newString = word.substring(1);
-  newString = newString + firstCon + suffix;  
-  displayResult.innerHTML += newString ;
-  console.log(newString);
-};
+    const firstCon = conArray.shift();  
+    let newString = word.substring(1);
+    newString = newString + firstCon + suffix;  
+    displayResult.innerHTML += newString ;
+    console.log("User's word in pig latin is" + newString);
+    }
+    else {
+      clicked = false;
+      displayResult.innerHTML = '' ;
+      console.log("User's word removed");
+    }
+  });
 
-console.log(pigLatin());
+// Clear input box when clicked
 
-// Step 3: Write a function to clear text when user begins typing
-addEventListener('keydown', clearResult);
+// function clear() {
+//     document.getElementById('input').value = '';
+// }
 
-function clearResult(){
-  displayResult.innerHTML = '' ;
-  console.log('Results removed')
+input.onclick = function clear() {
+  document.getElementById('input').value = '';
 }
-
-clearResult();
